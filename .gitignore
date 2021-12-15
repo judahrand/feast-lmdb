@@ -13,7 +13,7 @@ output
 .envrc
 .direnv
 
-# python 
+# python
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -75,3 +75,6 @@ dmypy.json
 .bloop
 .metals
 *.code-workspace
+
+# pyenv
+.python-version
