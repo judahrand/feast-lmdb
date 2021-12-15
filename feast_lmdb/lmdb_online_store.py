@@ -16,7 +16,7 @@ from pydantic import StrictStr
 from pydantic.typing import Literal
 
 
-class MySQLOnlineStoreConfig(FeastConfigBaseModel):
+class LMDBOnlineStoreConfig(FeastConfigBaseModel):
     """
     Configuration for the MySQL online store.
     NOTE: The class *must* end with the `OnlineStoreConfig` suffix.
@@ -42,7 +42,7 @@ class MySQLOnlineStore(OnlineStore):
     def _get_conn(self, config: RepoConfig):
 
         online_store_config = config.online_store
-        assert isinstance(online_store_config, MySQLOnlineStoreConfig)
+        assert isinstance(online_store_config, LMDBOnlineStoreConfig)
 
         if not self._conn:
             self._conn = connector.connect(
