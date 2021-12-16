@@ -3,7 +3,6 @@ import re
 from datetime import datetime
 
 from feast import FeatureStore
-
 from feature_repo.repo import driver, driver_hourly_stats_view
 
 
@@ -28,9 +27,7 @@ def test_end_to_end():
 
 
 def test_cli():
-    os.system(
-        "PYTHONPATH=$PYTHONPATH:/$(pwd) feast -c feature_repo apply"
-    )
+    os.system("PYTHONPATH=$PYTHONPATH:/$(pwd) feast -c feature_repo apply")
     os.system(
         "PYTHONPATH=$PYTHONPATH:/$(pwd) feast -c feature_repo materialize-incremental 2021-08-19T22:29:28 > output"
     )
@@ -38,11 +35,9 @@ def test_cli():
         output = f.read()
 
     try:
-        if "feast_custom_online_store.mysql_online_store.MySQLOnlineStore" not in output:
+        if "feast_lmdb.lmdb_online_store.LMDBOnlineStore" not in output:
             raise Exception(
-                f'Failed to successfully use online store from CLI. Output:\n\n {output}'
+                f"Failed to successfully use online store from CLI. Output:\n\n {output}"
             )
     finally:
-        os.system(
-            "PYTHONPATH=$PYTHONPATH:/$(pwd) feast -c feature_repo teardown"
-        )
+        os.system("PYTHONPATH=$PYTHONPATH:/$(pwd) feast -c feature_repo teardown")
