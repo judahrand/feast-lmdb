@@ -48,7 +48,8 @@ class LMDBOnlineStore(OnlineStore):
 
         Path(online_store_config.path).mkdir(parents=True, exist_ok=True)
         if not self._conn:
-            self._conn = lmdb.open(online_store_config.path)
+            # On 64bit systems there is no penalty to using a very large map_size.
+            self._conn = lmdb.open(online_store_config.path, map_size=int(1e12))
         return self._conn
 
     def delete_table_values(self, config: RepoConfig, table: FeatureView):
